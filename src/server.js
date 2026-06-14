@@ -83,6 +83,12 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok", app: APP_NAME, ...db.getStats() });
 });
 
+// ── Root route for Meta's crawler (ensure a 200 on the main domain) ───────────
+app.get("/", (req, res) => {
+  // Return a simple 200 OK text response so Meta's root-domain check succeeds
+  res.status(200).send(`${APP_NAME} Server is Running`);
+});
+
 // ── Admin: spam guard stats ───────────────────────────────────────────────────
 app.get("/admin/spam", adminAuth, (req, res) => {
   res.json(getGuardStats());
